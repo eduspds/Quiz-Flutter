@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,33 +9,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Quiz!',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 255, 0, 0)),
-        useMaterial3: true,
-      ),
-      home: const QuizScreen(title: 'Universo Marvel'),
+      title: 'Quiz do Universo Marvel',
+      theme: ThemeData(primarySwatch: Colors.red),
+      home: const QuizPage(),
     );
   }
 }
 
-class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key, required this.title});
-
-  final String title;
+class QuizPage extends StatefulWidget {
+  const QuizPage({super.key});
 
   @override
-  QuizScreenState createState() => QuizScreenState();
+  _QuizPageState createState() => _QuizPageState();
 }
 
-class QuizScreenState extends State<QuizScreen> {
-  int _questionIndex = 0;
-  int _totalScore = 0;
-
+class _QuizPageState extends State<QuizPage> {
   final List<Map<String, Object>> _questions = [
     {
-      'questionText': 'Qual é o nome verdadeiro do Homem de Ferro?',
+      'questionText': '1 - Qual é o nome verdadeiro do Homem de Ferro?',
       'answers': [
         {'text': 'Bruce Wayne', 'score': 0},
         {'text': 'Tony Stark', 'score': 1},
@@ -46,7 +35,7 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Quem é o Deus do trovão no universo Marvel?',
+      'questionText': '2 - Quem é o Deus do trovão no universo Marvel?',
       'answers': [
         {'text': 'Loki', 'score': 0},
         {'text': 'Odin', 'score': 0},
@@ -55,7 +44,7 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Qual é o nome da cidade onde o Pantera Negra é rei?',
+      'questionText': '3 - Qual é o nome da cidade onde o Pantera Negra é rei?',
       'answers': [
         {'text': 'Wakanda', 'score': 1},
         {'text': 'Atlântida', 'score': 0},
@@ -64,7 +53,7 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Quem é o arqui-inimigo do Capitão América?',
+      'questionText': '4 - Quem é o arqui-inimigo do Capitão América?',
       'answers': [
         {'text': 'Thanos', 'score': 0},
         {'text': 'Ultron', 'score': 0},
@@ -73,16 +62,17 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Qual é o nome da joia que controla o tempo?',
+      'questionText':
+          '5 - Qual é o nome da joia que deu origem ao personagem Visão?',
       'answers': [
         {'text': 'Joia da Alma', 'score': 0},
         {'text': 'Joia do Espaço', 'score': 0},
-        {'text': 'Joia do Tempo', 'score': 1},
+        {'text': 'Joia do Mente', 'score': 1},
         {'text': 'Joia da Realidade', 'score': 0},
       ],
     },
     {
-      'questionText': 'Qual é o nome da irmã de Thor?',
+      'questionText': '6 - Qual é o nome da irmã de Thor?',
       'answers': [
         {'text': 'Hela', 'score': 1},
         {'text': 'Sif', 'score': 0},
@@ -92,7 +82,7 @@ class QuizScreenState extends State<QuizScreen> {
     },
     {
       'questionText':
-          'Quem é o vilão principal do filme "Os Vingadores: Guerra Infinita"?',
+          '7 - Quem é o vilão principal do filme "Os Vingadores: Guerra Infinita"?',
       'answers': [
         {'text': 'Ultron', 'score': 0},
         {'text': 'Thanos', 'score': 1},
@@ -102,7 +92,7 @@ class QuizScreenState extends State<QuizScreen> {
     },
     {
       'questionText':
-          'Qual é o nome da super-heroína que tem poderes relacionados à realidade e foi criada por Wanda Maximoff?',
+          '8 - Qual é o nome da super-heroína que tem poderes relacionados à realidade e foi criada por Wanda Maximoff?',
       'answers': [
         {'text': 'Capitã Marvel', 'score': 0},
         {'text': 'Agatha Harkness', 'score': 0},
@@ -111,7 +101,7 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Quem é o alter ego do Hulk?',
+      'questionText': '9 - Quem é o alter ego do Hulk?',
       'answers': [
         {'text': 'Bruce Banner', 'score': 1},
         {'text': 'Tony Stark', 'score': 0},
@@ -120,7 +110,7 @@ class QuizScreenState extends State<QuizScreen> {
       ],
     },
     {
-      'questionText': 'Qual super-heroína é conhecida como "A Vespa"?',
+      'questionText': '10 - Qual super-heroína é conhecida como "A Vespa"?',
       'answers': [
         {'text': 'Natasha Romanoff', 'score': 0},
         {'text': 'Carol Danvers', 'score': 0},
@@ -130,10 +120,24 @@ class QuizScreenState extends State<QuizScreen> {
     },
   ];
 
+  int _totalScore = 0;
+  int _questionIndex = 0;
+
   void _answerQuestion(int score) {
+    if (!_quizFinished) {
+      setState(() {
+        _totalScore += score;
+        _questionIndex++;
+      });
+    }
+  }
+
+  bool get _quizFinished => _questionIndex >= _questions.length;
+
+  void _restartQuiz() {
     setState(() {
-      _totalScore += score;
-      _questionIndex++;
+      _totalScore = 0;
+      _questionIndex = 0;
     });
   }
 
@@ -141,54 +145,87 @@ class QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: Text(widget.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ))),
-        backgroundColor: const Color.fromARGB(255, 235, 90, 80),
+        title: const Text(
+          'Universo Marvel',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.redAccent,
+                Colors.deepOrange,
+                Colors.black,
+              ],
+            ),
+          ),
+        ),
       ),
       body: Center(
-        child: _questionIndex < _questions.length
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    _questions[_questionIndex]['questionText'] as String,
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  const SizedBox(height: 40),
-                  ...((_questions[_questionIndex]['answers']
-                          as List<Map<String, Object>>)
-                      .map((answer) {
-                    return SizedBox(
-                      width: 200,
-                      height: 50,
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: ElevatedButton(
-                          onPressed: () =>
-                              _answerQuestion(answer['score'] as int),
-                          child: 
-                          Text(answer['text'] as String),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 253, 34, 34),
-                            foregroundColor: const Color.fromARGB(
-                                255, 255, 255, 255),
-                          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Adicionando a imagem abaixo do título
+            Image.asset(
+              'assets/images/marvel.png', // Insira o caminho correto da sua imagem
+              width: 200, // Ajuste a largura da imagem conforme necessário
+              height: 200, // Ajuste a altura da imagem conforme necessário
+            ),
+            const SizedBox(
+                height: 20), // Espaçamento entre a imagem e o próximo widget
+            _quizFinished
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Você terminou! Sua pontuação é: $_totalScore',
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _restartQuiz,
+                        child: const Text('Reiniciar Quiz'),
+                      ),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          _questions[_questionIndex]['questionText'] as String,
+                          style: const TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    );
-                  })),
-                ],
-              )
-            : Center(
-                child: Text(
-                  'Você terminou! Sua pontuação é: $_totalScore',
-                  style: const TextStyle(fontSize: 24),
-                ),
-              ),
+                      const SizedBox(height: 40),
+                      ...(_questions[_questionIndex]['answers']
+                              as List<Map<String, Object>>)
+                          .map((answer) {
+                        return Container(
+                          width: 200,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                _answerQuestion(answer['score'] as int),
+                            child: Text(answer['text'] as String),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+          ],
+        ),
       ),
     );
   }
