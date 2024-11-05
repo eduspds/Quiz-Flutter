@@ -1,4 +1,4 @@
-# aula2510
+# Quiz-Flutter
 
 A new Flutter project.
 
