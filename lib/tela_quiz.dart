@@ -76,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
     },
     {
       'questionText':
-          '8 - Qual é o nome da super-heroína que tem poderes relacionados à realidade e foi criada por Wanda Maximoff?',
+          '8 - Qual é o nome da super-heroína que tem poderes relacionados à realidade e é condutora da Magia do Caos?',
       'answers': [
         {'text': 'Capitã Marvel', 'score': 0},
         {'text': 'Agatha Harkness', 'score': 0},
@@ -153,14 +153,17 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
       ),
-      body: Center(
+      body: 
+      SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'lib/assets/marvel.jpg',
-              width: 500,
-              height: 500,
+              width: MediaQuery.of(context).size.width * 0.8, // ajuste de largura para ser responsivo
+                  height: MediaQuery.of(context).size.height * 0.3, // ajuste de altura para ser responsivo
             ),
             const SizedBox(height: 20),
             _quizFinished
@@ -168,10 +171,11 @@ class _QuizPageState extends State<QuizPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Você terminou! Sua pontuação é: $_totalScore',
+                        'Você terminou! \n Sua pontuação é: $_totalScore',
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
+                            textAlign: TextAlign.center,                      
+                ),
                       const SizedBox(height: 20),
                       ElevatedButton(
                         // botão de reiniciar o quiz
@@ -184,7 +188,7 @@ class _QuizPageState extends State<QuizPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
                           _questions[_questionIndex]['questionText'] as String,
                           style: const TextStyle(fontSize: 20),
@@ -196,8 +200,8 @@ class _QuizPageState extends State<QuizPage> {
                               as List<Map<String, Object>>)
                           .map((answer) {
                         return Container(
-                          width: 200,
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
+                          width: MediaQuery.of(context).size.width * 0.6,
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
                           child: ElevatedButton(
                             onPressed: () =>
                                 _answerQuestion(answer['score'] as int),
@@ -209,6 +213,8 @@ class _QuizPageState extends State<QuizPage> {
                   ),
           ],
         ),
+      ),
+      ),
       ),
     );
   }

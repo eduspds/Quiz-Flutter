@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 class TelaInicial extends StatelessWidget {
   const TelaInicial({super.key});
 
-  @override // construção da tela
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold( // widget de estilização
+      appBar: AppBar( //chamou o app bar
         title: const Text(
           'Universo Marvel',
           style: TextStyle(
@@ -38,8 +41,9 @@ class TelaInicial extends StatelessWidget {
           children: [
             Image.asset(
               'lib/assets/marvel.jpg',
-              width: 500,
-              height: 500,
+              width: screenWidth * 0.6, // ajustando a largura da imagem
+              height: screenHeight * 0.3, // ajustando a altura da imagem
+              fit: BoxFit.contain, // ajusta a imagem dentro do espaço
             ),
             const SizedBox(height: 20),
             Column(
@@ -47,19 +51,24 @@ class TelaInicial extends StatelessWidget {
               children: [
                 Text(
                   'Bem vindo ao Quiz do Universo Marvel!',
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.06, // tamanho do texto ajustado
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  // botão de reiniciar o quiz
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => QuizPage()),
-                    );
-                  },
-                  child: const Text('Iniciar Quiz'),
+                SizedBox(
+                  width: screenWidth * 0.5, // largura do botão responsiva
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const QuizPage()),
+                      );
+                    },
+                    child: const Text('Iniciar Quiz'),
+                  ),
                 ),
               ],
             ),
