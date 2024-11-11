@@ -9,8 +9,8 @@ class TelaInicial extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold( // widget de estilização
-      appBar: AppBar( //chamou o app bar
+    return Scaffold(
+      appBar: AppBar(
         title: const Text(
           'Universo Marvel',
           style: TextStyle(
@@ -41,9 +41,9 @@ class TelaInicial extends StatelessWidget {
           children: [
             Image.asset(
               'lib/assets/marvel.jpg',
-              width: screenWidth * 0.6, // ajustando a largura da imagem
-              height: screenHeight * 0.3, // ajustando a altura da imagem
-              fit: BoxFit.contain, // ajusta a imagem dentro do espaço
+              width: screenWidth * 0.6,
+              height: screenHeight * 0.3,
+              fit: BoxFit.contain,
             ),
             const SizedBox(height: 20),
             Column(
@@ -52,19 +52,28 @@ class TelaInicial extends StatelessWidget {
                 Text(
                   'Bem vindo ao Quiz do Universo Marvel!',
                   style: TextStyle(
-                    fontSize: screenWidth * 0.06, // tamanho do texto ajustado
+                    fontSize: screenWidth * 0.06,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  width: screenWidth * 0.5, // largura do botão responsiva
+                  width: screenWidth * 0.5,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const QuizPage()),
+                    
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => const QuizPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 500),
+                        ),
                       );
                     },
                     child: const Text('Iniciar Quiz'),
