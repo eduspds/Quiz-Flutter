@@ -63,7 +63,41 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - lib/assets/marvel.jpg
+  #easy
+    - assets/marvel.png
+    - assets/marvel_bg.png
+    - assets/homemdeferro_easy.png # 1
+    - assets/homemaranha_easy.png # 2
+    - assets/panteranegra_easy.png # 3
+    - assets/guerrainfinita_easy.png # 4
+    - assets/hulk_easy.png # 5
+    - assets/capitaoamerica_easy.png # 6
+    - assets/martelo_easy.png # 7
+    - assets/homemformiga_easy.png # 8
+    - assets/shangchi_easy.png # 9
+    - assets/capitamarvel_easy.png # 10
+    #medium
+    - assets/trovao_medium.png # 1
+    - assets/guardioes_medium.png # 2
+    - assets/natasha_medium.png # 3
+    - assets/strange_medium.png # 4
+    - assets/escudo_medium.png # 5
+    - assets/ultron_medium.png # 6
+    - assets/tchalla_medium.png # 7
+    - assets/joias_medium.png # 8
+    - assets/thor_medium.png # 9
+    - assets/capitao_medium.png # 10
+    #hard
+    - assets/loki_hard.png # 1
+    - assets/cavaleiro_hard.png # 2
+    - assets/wandahex_hard.png # 3
+    - assets/gaviao_hard.png # 4
+    - assets/agatha_hard.png # 5
+    - assets/falcaoesoldado_hard.png # 6
+    - assets/ucm_hard.png # 7
+    - assets/hex_hard.png # 8
+    - assets/bruxa_hard.png # 9
+    - assets/ucm_hard_final.png # 10
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
