@@ -1,4 +1,4 @@
-import 'package:aula2510/tela_quiz.dart'; // Importa a tela de quiz
+import 'package:aula2510/tela_quiz.dart';
 import 'package:flutter/material.dart';
 
 class TelaInicial extends StatelessWidget {
@@ -17,19 +17,19 @@ class TelaInicial extends StatelessWidget {
             fontSize: 26,
             fontWeight: FontWeight.bold,
             color: Colors.white,
-            letterSpacing: 1.2,  // Espaçamento maior entre as letras
+            letterSpacing: 1.2,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,  // Fundo transparente para o AppBar
-        elevation: 10,  // Sombra suave para dar profundidade
+        backgroundColor: Colors.transparent,
+        elevation: 10,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.redAccent.withOpacity(0.8),  // Reduzir a opacidade para um efeito mais suave
+                Colors.redAccent.withOpacity(0.8),
                 Colors.deepOrange.withOpacity(0.9),
                 Colors.black.withOpacity(0.7),
               ],
@@ -50,20 +50,21 @@ class TelaInicial extends StatelessWidget {
             ),
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/marvel.png',
-                width: screenWidth * 0.6,
-                height: screenHeight * 0.3,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 20),
-              Column(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: screenHeight * 0.3,
+                    child: Image.asset(
+                      'assets/marvel.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   Text(
                     'Bem-vindo ao Quiz do Universo Marvel!',
                     style: TextStyle(
@@ -74,16 +75,17 @@ class TelaInicial extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    width: screenWidth * 0.5,
+                    width: screenWidth * 0.6,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,  
-                        foregroundColor: Colors.black,  
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         side: const BorderSide(color: Colors.black, width: 1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 15),
                       ),
                       onPressed: () {
                         _showRulesDialog(context);
@@ -107,7 +109,7 @@ class TelaInicial extends StatelessWidget {
                   _buildDifficultyButton(context, 'Difícil', 'hard'),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -115,17 +117,18 @@ class TelaInicial extends StatelessWidget {
   }
 
   Widget _buildDifficultyButton(BuildContext context, String label, String difficulty) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: screenWidth * 0.5,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,  
-          foregroundColor: Colors.black,  
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
           side: const BorderSide(color: Colors.black, width: 1),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          padding:const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
         ),
         onPressed: () {
           Navigator.of(context).push(

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'tela_resultado.dart';
 
 class QuizPage extends StatefulWidget {
-  final String difficulty; // Recebe o nível de dificuldade
+  final String difficulty;
 
-  const QuizPage({super.key, required this.difficulty}); // Adiciona o parâmetro
+  const QuizPage({super.key, required this.difficulty});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -472,6 +472,7 @@ class _QuizPageState extends State<QuizPage> {
         child: SingleChildScrollView(
           child: Stack(
             children: [
+              // Fundo com imagem
               ColorFiltered(
                 colorFilter: ColorFilter.mode(
                   Colors.white.withOpacity(0.1),
@@ -484,70 +485,95 @@ class _QuizPageState extends State<QuizPage> {
                   height: MediaQuery.of(context).size.height,
                 ),
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (_questions[_questionIndex]['imagePath'] != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: Image.asset(
-                          _questions[_questionIndex]['imagePath'] as String,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          fit: BoxFit
-                              .contain, // Usar BoxFit.contain para ajustar a imagem sem cortá-la
-                        ),
-                      ),
-                    const SizedBox(height: 20),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) {
-                        return FadeTransition(opacity: animation, child: child);
-                      },
-                      child: Padding(
-                        key: ValueKey<int>(_questionIndex),
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Text(
-                          _questions[_questionIndex]['questionText'] as String,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05,
+                  vertical: 20,
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Imagem da questão
+                      if (_questions[_questionIndex]['imagePath'] != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: Image.asset(
+                            _questions[_questionIndex]['imagePath'] as String,
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            fit: BoxFit.contain,
                           ),
-                          textAlign: TextAlign.center,
+                        ),
+                      const SizedBox(height: 20),
+                      // Texto da pergunta
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          return FadeTransition(opacity: animation, child: child);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0), // Adicionei o padding
+                          key: ValueKey<int>(_questionIndex),
+                          child: Text(
+                            _questions[_questionIndex]['questionText'] as String,
+                            style: const TextStyle(
+                              fontSize: 22, // Ajustado para maior flexibilidade
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: (_questions[_questionIndex]['answers']
-                              as List<Map<String, Object>>)
-                          .map((answer) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+
+                      const SizedBox(height: 20),
+                      // Opções de resposta
+                      Column(
+                        children: (_questions[_questionIndex]['answers']
+                                as List<Map<String, Object>>)
+                            .map((answer) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.01,
+                            ),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    side: const BorderSide(
+                                      color: Colors.black,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                    horizontal: 10,
+                                  ),
+                                ),
+                                onPressed: () =>
+                                    _answerQuestion(answer['score'] as int),
+                                child: Text(
+                                  answer['text'] as String,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              side: const BorderSide(color: Colors.black),
                             ),
-                            onPressed: () =>
-                                _answerQuestion(answer['score'] as int),
-                            child: Text(
-                              answer['text'] as String,
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
